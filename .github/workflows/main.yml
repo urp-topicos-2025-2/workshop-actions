@@ -4,6 +4,9 @@ on:
   workflow_dispatch:
   issues:
     types: [opened, edited]
+  push:
+    branches:
+      -main
 
 jobs:
   greet:
