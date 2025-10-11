@@ -9,9 +9,7 @@ jobs:
     steps:
       - name: Greet the User
         run: echo "Hello World!"
-      - name: list all files in the folder
-      - run: ls -la
-      - name: Download source code
-        uses: actions/checkout@v5
-      - name: lsit all files adter the source downloaded
-        run: ls -la
+      # List all files in the current directory for comparison before and after actions/checkout@v5.
+      - run: ls -l
+      - uses: actions/checkout@v5
+      - run: ls -l
