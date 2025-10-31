@@ -32,6 +32,20 @@ jobs:
       - run: npm run test
       - name: 'Report Coverage'
         uses:  davelosert/vitest-coverage-report-action@v2
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript
+
+      - name: Autobuild CodeQL
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Analyze CodeQL
+        uses: github/codeql-action/analyze@v3
+
+      - name: Run Software Composition Analysis (npm audit)
+        run: |
+          npm audit --audit-level=moderate
 
   package-and-publish:
     needs:
