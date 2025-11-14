@@ -1,24 +1,18 @@
-import { FunctionComponent, ReactElement } from "react";
+﻿export function sanitizeUrl(url: string) {
+  try {
+    const parsed = new URL(url, "https://example.com");
+    const scheme = parsed.protocol.replace(":", "").toLowerCase();
 
-interface OctoLinkProps {
-  href: string;
-  title: string;
+    // Permitir solo http/https y rutas relativas seguras
+    if (scheme === "http" || scheme === "https" || url.startsWith("/") || url.startsWith("./") || url.startsWith("../")) {
+      return url;
+    }
+    return "about:blank";
+  } catch {
+    return "about:blank";
+  }
 }
 
-function sanitizeUrl(url: string) {
-  // UNCOMMENT THE FOLLOWING LINES TO INTRODUCE A SECURITY VULNERABILITY FOR STEP 04: SECURITY
-  // const u = decodeURI(url).trim().toLowerCase();
-  // if (u.startsWith("javascript:")) {
-  //   return "about:blank";
-  // }
-  return url;
+export default function OctoLink(u: string) {
+  return sanitizeUrl(u);
 }
-
-const OctoLink: FunctionComponent<OctoLinkProps> = ({
-  href,
-  title,
-}): ReactElement => {
-  return <a href={sanitizeUrl(href)}>{title}</a>;
-};
-
-export { OctoLink };
